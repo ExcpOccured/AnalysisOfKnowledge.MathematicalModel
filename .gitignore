@@ -1,3 +1,11 @@
 bin/
 obj/
 /packages/
+/.idea/.idea.AnalysisOfKnowledge.MathematicalModel/.idea/contentModel.xml
+/.idea/.idea.AnalysisOfKnowledge.MathematicalModel/.idea/indexLayout.xml
+/.idea/.idea.AnalysisOfKnowledge.MathematicalModel/.idea/modules.xml
+/.idea/.idea.AnalysisOfKnowledge.MathematicalModel/.idea/projectSettingsUpdater.xml
+/.idea/.idea.AnalysisOfKnowledge.MathematicalModel/riderModule.iml
+/.idea/.idea.AnalysisOfKnowledge.MathematicalModel/.idea/vcs.xml
+.DS_Store
+.idea
