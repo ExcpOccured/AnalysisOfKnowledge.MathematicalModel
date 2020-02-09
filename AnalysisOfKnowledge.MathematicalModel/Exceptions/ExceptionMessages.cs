@@ -1,4 +1,4 @@
-namespace AnalysisOfKnowledge.MathematicalModel.Models
+namespace AnalysisOfKnowledge.MathematicalModel.Exceptions
 {
     internal static class ExceptionMessages
     {
