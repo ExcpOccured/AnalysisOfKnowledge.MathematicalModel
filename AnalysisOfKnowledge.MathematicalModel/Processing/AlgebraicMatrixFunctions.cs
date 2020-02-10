@@ -9,7 +9,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
     /// <summary>
     /// Implementation of <see cref="IAlgebraicMatrixFunctions"/>>
     /// </summary>
-    internal class AlgebraicMatrixFunctions : IAlgebraicMatrixFunctions
+    public class AlgebraicMatrixFunctions : IAlgebraicMatrixFunctions
     {
         private double PrecalculatedDeterminant { get; set; } = double.NaN;
 
@@ -81,7 +81,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
         /// <param name="secondMatrix">Matrix 2 with dimension {M, N}</param>
         /// <param name="functor">Optional functor</param>
         /// <returns>The resulting product of two matrices</returns>
-        public double[,] MatrixMultiplication(double[,] firstMatrix, double[,] secondMatrix,
+        public double[,] MatrixMultiplication(ref double[,] firstMatrix, ref double[,] secondMatrix,
             Func<double[,], double[,]> functor = null)
         {
             var firstMatrixRows = firstMatrix.GetLength(0);
@@ -97,18 +97,41 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
                 throw new ArgumentException(ExceptionMessages.NotCompatibleMatricesExceptionMessage);
             }
 
-            FunctionOver2MatricesIndexValue(firstMatrixRows, secondMatrixCells, ref firstMatrix,
+            FunctionOver2MatricesIndexValue(secondMatrixRows, secondMatrixCells, ref firstMatrix,
                 ref secondMatrix,
                 (int row, int cell, ref double[,] firstComputingMatrix, ref double[,] secondComputingMatrix) =>
                 {
-                    double buffer = 0;
-
                     for (var cellIndex = 0; cellIndex < firstMatrixCells; cellIndex++)
                     {
-                        buffer += firstComputingMatrix[row, cellIndex] * secondComputingMatrix[row, cellIndex];
+                        resultingMatrix[row, cell] +=
+                            firstComputingMatrix[row, cellIndex] * secondComputingMatrix[cellIndex, cell];
                     }
+                });
 
-                    resultingMatrix[row, cell] = buffer;
+            return !(functor is null)
+                ? functor(resultingMatrix)
+                : resultingMatrix;
+        }
+
+        /// <summary>
+        /// Map by type Matrix * Matrix>
+        /// </summary>
+        /// <param name="matrix">Matrix with dimension {M, N}</param>
+        /// <param name="coefficient">Numerical coefficient</param>
+        /// <param name="functor">Optional functor</param>
+        /// <returns>The resulting product of two matrices</returns>
+        public double[,] MatrixMultiplication(ref double[,] matrix, double coefficient,
+            Func<double[,], double[,]> functor = null)
+        {
+            var rows = matrix.GetLength(0);
+            var cells = matrix.GetLength(1);
+
+            var resultingMatrix = new double[rows, cells];
+
+            FunctionOverMatrixIndexValue(rows, cells, ref matrix,
+                (int row, int cell, ref double[,] processingMatrix) =>
+                {
+                    resultingMatrix[row, cell] = processingMatrix[row, cell] * coefficient;
                 });
 
             return !(functor is null)

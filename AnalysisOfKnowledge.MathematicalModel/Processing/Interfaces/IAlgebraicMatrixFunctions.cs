@@ -5,7 +5,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing.Interfaces
     /// <summary>
     /// Contains matrix functions
     /// </summary>
-    internal interface IAlgebraicMatrixFunctions
+    public interface IAlgebraicMatrixFunctions
     {
         /// <summary>
         /// Map by type <para>matrix</para>^T>
@@ -30,7 +30,18 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing.Interfaces
         /// <param name="secondMatrix">Matrix 2 with dimension {M, N}</param>
         /// <param name="functor">Optional functor</param>
         /// <returns>The resulting product of two matrices</returns>
-        double[,] MatrixMultiplication(double[,] firstMatrix, double[,] secondMatrix,
+        double[,] MatrixMultiplication(ref double[,] firstMatrix, ref double[,] secondMatrix,
+            Func<double[,], double[,]> functor = null);
+
+
+        /// <summary>
+        /// Map by type Matrix * Matrix>
+        /// </summary>
+        /// <param name="matrix">Matrix with dimension {M, N}</param>
+        /// <param name="coefficient">Numerical coefficient</param>
+        /// <param name="functor">Optional functor</param>
+        /// <returns>The resulting product of two matrices</returns>
+        double[,] MatrixMultiplication(ref double[,] matrix, double coefficient,
             Func<double[,], double[,]> functor = null);
     }
 }
