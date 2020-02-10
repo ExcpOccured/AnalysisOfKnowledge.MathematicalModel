@@ -169,7 +169,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
             for (var index = 0; index < cells; index++)
             {
                 buffer += (index % 2 == 1 ? 1 : -1) * matrix[1, index] *
-                          CalculateMinor(1, index, ref matrix,
+                          CalculateMinor(index, 1, ref matrix,
                               CreateMatrixWithoutCell, CreateMatrixWithoutRow,
                               MatrixDeterminant);
             }
@@ -199,7 +199,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
                 {
                     resultingMatrix[row, cell] = cellIndex < cell
                         ? computedMatrix[row, cellIndex]
-                        : computedMatrix[row + 1, cellIndex];
+                        : computedMatrix[row, cellIndex + 1];
                 });
 
             return resultingMatrix;

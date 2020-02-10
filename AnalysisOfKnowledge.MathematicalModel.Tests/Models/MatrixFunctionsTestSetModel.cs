@@ -18,9 +18,16 @@ namespace AnalysisOfKnowledge.MathematicalModel.Tests.Models
 
         internal double[,] TestMatrix2 => new double[,]
         {
-            {1, 1}, 
+            {1, 1},
             {2, 0},
             {3, 3}
+        };
+
+        internal double[,] TestMatrix3 => new double[,]
+        {
+            {2, 5, 7},
+            {6, 3, 4},
+            {5, -2, -3}
         };
     }
 }
