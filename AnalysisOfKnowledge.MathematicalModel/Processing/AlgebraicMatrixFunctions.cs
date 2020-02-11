@@ -144,7 +144,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
         /// </summary>
         /// <param name="matrix">Matrix with dimension {M, N}</param>
         /// <returns>Determinant of the matrix</returns>
-        private double MatrixDeterminant(ref double[,] matrix)
+        public double MatrixDeterminant(ref double[,] matrix)
         {
             if (!double.IsNaN(PrecalculatedDeterminant))
             {
@@ -180,70 +180,66 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
         }
 
         /// <summary>
-        /// Creates a vector
+        /// Evaluates the matrix minor
         /// </summary>
-        private double[,] CreateMatrixWithoutCell(int cell, ref double[,] mainMatrix)
+        private double[,] CreateMatrixWithoutCell(int cell, ref double[,] processingMatrix)
         {
-            var rows = mainMatrix.GetLength(0);
-            var cells = mainMatrix.GetLength(1);
+            var rows = processingMatrix.GetLength(0);
+            var cells = processingMatrix.GetLength(1);
 
             if (cell < 0 || cell >= cells)
             {
                 throw new ArithmeticException(ExceptionMessages.ArithmeticalExceptionMessage);
             }
 
-            var resultingMatrix = new double[rows, cells - 1];
+            var minor = new double[rows, cells - 1];
 
-            FunctionOverMatrixIndexValue(rows, cells, ref mainMatrix,
+            FunctionOverMatrixIndexValue(rows, cells - 1, ref processingMatrix,
                 (int row, int cellIndex, ref double[,] computedMatrix) =>
-                {
-                    resultingMatrix[row, cell] = cellIndex < cell
+                    minor[row, cell] = cellIndex < cell
                         ? computedMatrix[row, cellIndex]
-                        : computedMatrix[row, cellIndex + 1];
-                });
+                        : computedMatrix[row, cellIndex + 1]);
 
-            return resultingMatrix;
+            return minor;
         }
 
         /// <summary>
-        /// Creates a invariant vector
+        /// Evaluates the matrix invariant minor
         /// </summary>
-        private double[,] CreateMatrixWithoutRow(int row, ref double[,] mainMatrix)
+        private double[,] CreateMatrixWithoutRow(int row, ref double[,] processingMatrix)
         {
-            var rows = mainMatrix.GetLength(0);
-            var cells = mainMatrix.GetLength(1);
+            var rows = processingMatrix.GetLength(0);
+            var cells = processingMatrix.GetLength(1);
 
             if (row < 0 || row >= rows)
             {
                 throw new ArithmeticException(ExceptionMessages.ArithmeticalExceptionMessage);
             }
 
-            var resultingMatrix = new double[rows - 1, cells];
+            var minor = new double[rows - 1, cells];
 
-            FunctionOverMatrixIndexValue(rows, cells, ref mainMatrix,
+            FunctionOverMatrixIndexValue(row, cells, ref processingMatrix,
                 (int rowIndex, int cell, ref double[,] computedMatrix) =>
-                {
-                    resultingMatrix[rowIndex, cell] = rowIndex < row
+                    minor[rowIndex, cell] = rowIndex < row
                         ? computedMatrix[rowIndex, cell]
-                        : computedMatrix[rowIndex + 1, cell];
-                });
+                        : computedMatrix[rowIndex + 1, cell]);
 
-            return resultingMatrix;
+            return minor;
         }
 
         /// <summary>
         /// Evaluate the matrix minor by element index
         /// </summary>
-        private double CalculateMinor(int rowIndex, int cellIndex, ref double[,] mainMatrix,
+        private double CalculateMinor(int rowIndex, int cellIndex, ref double[,] processingMatrix,
             MatricesRefActionsDelegate.RefFunc<double[,], int, double[,]> createMatrixWithoutCell,
             MatricesRefActionsDelegate.RefFunc<double[,], int, double[,]> createMatrixWithoutRow,
             MatricesRefActionsDelegate.RefFunc<double, double[,]> calculateDeterminant)
         {
-            var vector = createMatrixWithoutCell(cellIndex, ref mainMatrix);
+            var minor = createMatrixWithoutCell(cellIndex, ref processingMatrix);
 
-            var invariantVector = createMatrixWithoutRow(rowIndex, ref vector);
+            var invariantMinor = createMatrixWithoutRow(rowIndex, ref minor);
 
-            return calculateDeterminant(ref invariantVector);
+            return calculateDeterminant(ref processingMatrix);
         }
 
         /// <summary>
