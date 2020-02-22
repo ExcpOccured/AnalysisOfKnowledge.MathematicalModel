@@ -12,7 +12,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Tests.Tests
         [Test]
         public void InvertMatrixTest()
         {
-            var matrix = TestSetModel.TestMatrix3;
+            var matrix = MatrixFunctionsTestSetModel.TestMatrix3;
 
             var expectedMatrix = new double[,]
             {

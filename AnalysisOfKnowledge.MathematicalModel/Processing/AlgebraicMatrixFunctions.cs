@@ -66,9 +66,9 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
                 (int row, int cell, ref double[,] calculatedMatrix) =>
                 {
                     resultingMatrix[row, cell] = ((row + cell) % 2 == 1 ? -1 : 1) * CalculateMinor(row, cell,
-                                                     ref calculatedMatrix,
-                                                     CreateMatrixWithoutCell, CreateMatrixWithoutRow,
-                                                     MatrixDeterminant) / determinant;
+                        ref calculatedMatrix,
+                        CreateMatrixWithoutCell, CreateMatrixWithoutRow,
+                        MatrixDeterminant) / determinant;
                 });
 
             return TransposedMatrix(ref resultingMatrix);
@@ -218,7 +218,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
 
             var minor = new double[rows - 1, cells];
 
-            FunctionOverMatrixIndexValue(row, cells, ref processingMatrix,
+            FunctionOverMatrixIndexValue(rows - 1, cells, ref processingMatrix,
                 (int rowIndex, int cell, ref double[,] computedMatrix) =>
                     minor[rowIndex, cell] = rowIndex < row
                         ? computedMatrix[rowIndex, cell]
@@ -231,15 +231,15 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
         /// Evaluate the matrix minor by element index
         /// </summary>
         private double CalculateMinor(int rowIndex, int cellIndex, ref double[,] processingMatrix,
-            MatricesRefActionsDelegate.RefFunc<double[,], int, double[,]> createMatrixWithoutCell,
-            MatricesRefActionsDelegate.RefFunc<double[,], int, double[,]> createMatrixWithoutRow,
-            MatricesRefActionsDelegate.RefFunc<double, double[,]> calculateDeterminant)
+            RefFunc<double[,], int, double[,]> createMatrixWithoutCell,
+            RefFunc<double[,], int, double[,]> createMatrixWithoutRow,
+            RefFunc<double, double[,]> calculateDeterminant)
         {
             var minor = createMatrixWithoutCell(cellIndex, ref processingMatrix);
 
             var invariantMinor = createMatrixWithoutRow(rowIndex, ref minor);
 
-            return calculateDeterminant(ref processingMatrix);
+            return calculateDeterminant(ref invariantMinor);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
         /// <param name="matrix"></param>
         /// <param name="functor">Operation on matrix elements</param>
         private void FunctionOverMatrixIndexValue(int upperBound, int lowerBound, ref double[,] matrix,
-            MatricesRefActionsDelegate.RefAction<int, int, double[,]> functor)
+            RefAction<int, int, double[,]> functor)
         {
             for (var upperIndex = 0; upperIndex < upperBound; upperIndex++)
             {
@@ -270,7 +270,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Processing
         /// <param name="secondMatrix">Second calculating matrix</param>
         /// <param name="functor">Operation on matrix elements</param>
         private void FunctionOver2MatricesIndexValue(int upperBound, int lowerBound, ref double[,] firstMatrix,
-            ref double[,] secondMatrix, MatricesRefActionsDelegate.RefAction<int, int, double[,], double[,]> functor)
+            ref double[,] secondMatrix, RefAction<int, int, double[,], double[,]> functor)
         {
             for (var upperIndex = 0; upperIndex < upperBound; upperIndex++)
             {

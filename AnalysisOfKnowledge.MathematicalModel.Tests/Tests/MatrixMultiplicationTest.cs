@@ -12,8 +12,8 @@ namespace AnalysisOfKnowledge.MathematicalModel.Tests.Tests
         [Test]
         public void TestMultiplicationOnEMatrix()
         {
-            var matrix = TestSetModel.TestMatrix1;
-            var eMatrix = TestSetModel.EMatrix;
+            var matrix = MatrixFunctionsTestSetModel.TestMatrix1;
+            var eMatrix = MatrixFunctionsTestSetModel.EMatrix;
 
             var moqAlgebraFunctionsService = new AlgebraicMatrixFunctions();
             var resultingMatrix = moqAlgebraFunctionsService.MatrixMultiplication(ref matrix, ref eMatrix);
@@ -24,8 +24,8 @@ namespace AnalysisOfKnowledge.MathematicalModel.Tests.Tests
         [Test]
         public void TestMultiplicationOnMatrix()
         {
-            var matrix1 = TestSetModel.TestMatrix1;
-            var matrix2 = TestSetModel.TestMatrix2;
+            var matrix1 = MatrixFunctionsTestSetModel.TestMatrix1;
+            var matrix2 = MatrixFunctionsTestSetModel.TestMatrix2;
 
             var expectedMatrix = new double[,]
             {
@@ -43,7 +43,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Tests.Tests
         [Test]
         public void TestCoefficientsAndCombinedFunctions()
         {
-            var matrix = TestSetModel.TestMatrix1;
+            var matrix = MatrixFunctionsTestSetModel.TestMatrix1;
 
             var expectedMatrix = new double[,]
             {

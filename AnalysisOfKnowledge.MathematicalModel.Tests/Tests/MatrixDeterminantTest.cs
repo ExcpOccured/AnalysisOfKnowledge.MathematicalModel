@@ -12,7 +12,7 @@ namespace AnalysisOfKnowledge.MathematicalModel.Tests.Tests
         [Test]
         public void InvertMatrixTest()
         {
-            var matrix = TestSetModel.TestMatrix1;
+            var matrix = MatrixFunctionsTestSetModel.TestMatrix1;
             
             var moqAlgebraFunctionsService = new AlgebraicMatrixFunctions();
             var determinant = moqAlgebraFunctionsService.MatrixDeterminant(ref matrix);
