@@ -4,7 +4,13 @@
 #include "src\AlgebraicOperations\header\algebraicOperations.h"
 #include "src\AlgebraicOperations\header\primitiveTypes.h"
 
-int GetMatrixDeterminate(Matrix_t* matrix, int executableDimension);
+#include <stdbool.h>
+
+#define DIMENSION_ASSERT_FAILED "Wrong dimension of matrix!"
+
+void EvaluateCoFactor(Matrix_t* matrix, Matrix_t* destination, int row, int cell, int dimension);
+
+int DeterminateMatrix(Matrix_t* matrix, int executableDimension);
 
 void AdjointMatrix(Matrix_t* rank, Matrix_t* sourceMatrix);
 
