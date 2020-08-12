@@ -8,9 +8,11 @@
 
 #define DIMENSION_ASSERT_FAILED "Wrong dimension of matrix!"
 
+#define INVERSE_ASSERT_FAILED "Singular matrix, can't find its inverse"
+
 void EvaluateCoFactor(Matrix_t* matrix, Matrix_t* destination, int row, int cell, int dimension);
 
-int DeterminateMatrix(Matrix_t* matrix, int executableDimension);
+int CalculateDeterminate(Matrix_t* matrix, int executedDimension);
 
 void AdjointMatrix(Matrix_t* rank, Matrix_t* sourceMatrix);
 
