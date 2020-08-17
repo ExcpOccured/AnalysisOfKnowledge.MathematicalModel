@@ -18,4 +18,7 @@ void AdjointMatrix(Matrix_t* rank, Matrix_t* sourceMatrix);
 
 bool IsAbleToInverseMatrix(Matrix_t* matrix, Matrix_t* matrixToInverse);
 
+// Contains the allocation!
+Matrix_t* Multiply(Matrix_t* firstMatrix, Matrix_t* secondMatrix);
+
 #endif //MATHMODEL_OPERATION_H

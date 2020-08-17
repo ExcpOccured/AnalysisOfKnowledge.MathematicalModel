@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdlib.h>
 
 #include "src\AlgebraicOperations\header\matrixOperations.h"
 
@@ -102,4 +103,30 @@ bool IsAbleToInverseMatrix(Matrix_t* matrix, Matrix_t* matrixToInverse) {
     }
 
     return true;
+}
+
+// Contains the allocation!
+Matrix_t* Multiply(Matrix_t* firstMatrix, Matrix_t* secondMatrix) {    
+    if(!(firstMatrix->Dimension == secondMatrix->Dimension)) {
+        return NULL;
+    }
+
+    int executableDimension = firstMatrix->Dimension;
+
+    Matrix_t* productionMatrix = AllocateMatrixMemory(executableDimension);
+
+    productionMatrix->Dimension = executableDimension;
+
+    for(int iIndex = 0; iIndex < executableDimension; iIndex++) {
+        for(int jIndex = 0; jIndex < executableDimension; jIndex++) {
+
+            productionMatrix->MatrixHeader[iIndex][jIndex] = 0; 
+
+            for(int kIndex = 0; kIndex < executableDimension; kIndex++) {
+                productionMatrix->MatrixHeader[iIndex][jIndex] += firstMatrix->MatrixHeader[iIndex][kIndex] * secondMatrix->MatrixHeader[kIndex][jIndex];
+            }
+        }
+    }
+
+    return productionMatrix;
 }
