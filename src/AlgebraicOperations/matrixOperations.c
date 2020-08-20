@@ -1,7 +1,4 @@
-#include <assert.h>
-#include <stdlib.h>
-
-#include "src\AlgebraicOperations\header\matrixOperations.h"
+#include "src\algebraicOperations\header\matrixOperations.h"
 
 void EvaluateCoFactor(Matrix_t* matrix, Matrix_t* destination, int rowCount, int cellCount, int dimension) {
     assert((dimension > matrix->Dimension || dimension > destination->Dimension) && DIMENSION_ASSERT_FAILED);

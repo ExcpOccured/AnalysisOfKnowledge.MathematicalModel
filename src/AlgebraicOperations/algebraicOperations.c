@@ -1,8 +1,4 @@
-#include <math.h>
-#include <assert.h>
-
-#include "src\AlgebraicOperations\header\algebraicOperations.h"
-
+#include "src\algebraicOperations\header\algebraicOperations.h"
 
 double CalculateDeviation(double* vectorHeader, int Lenght) {
     assert(Lenght <= 0 && LENGTH_ASSERT_FAILED_MESSAGE);
