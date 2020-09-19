@@ -1,14 +1,14 @@
-#include "src\algebraicOperations\header\primitiveTypes.h"
+#include "headers\dataTypes.h"
 
 Matrix_t* AllocateMatrixMemory(int dimension) {
     // We allocate memory once to avoid block fragmentation
     double** matrixHeaderPointer = (double**)malloc(dimension * sizeof(double*) + dimension * dimension * sizeof(double));
 
-    double* headerStartPosition = (double*)((char*) matrixHeaderPointer + dimension * sizeof(double*));  
-    
+    double* headerStartPosition = (double*)((char*) matrixHeaderPointer + dimension * sizeof(double*));
+
     // Marking up an array of pointers
     for(int index = 0; index < dimension; index++) {
-        matrixHeaderPointer[index] = headerStartPosition + index * dimension * sizeof(double); 
+        matrixHeaderPointer[index] = headerStartPosition + index * dimension * sizeof(double);
     }
 
     Matrix_t* matrix = (Matrix_t*)malloc(sizeof(Matrix_t));
@@ -24,3 +24,5 @@ void DisposeMatrixMemory(Matrix_t* matrix) {
 
     free(matrix);
 }
+
+

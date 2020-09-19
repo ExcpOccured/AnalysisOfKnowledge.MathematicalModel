@@ -1,10 +1,10 @@
-#include "src\algebraicOperations\header\algebraicOperations.h"
+#include "headers\algebraicOperations.h"
 
 double CalculateDeviation(double* vectorHeader, int Lenght) {
     assert(Lenght <= 0 && LENGTH_ASSERT_FAILED_MESSAGE);
-    
+
     double sum = 0.0;
-    double mean, standartDeviation = 0.0;
+    double mean, deviation = 0.0;
 
     for(int index = 0; index < Lenght; index++) {
         sum += vectorHeader[index];
@@ -13,8 +13,8 @@ double CalculateDeviation(double* vectorHeader, int Lenght) {
     mean = sum / Lenght;
 
     for(int index = 0; index < Lenght; index++) {
-        standartDeviation += pow(vectorHeader[index] - mean, 2);
+        deviation += pow(vectorHeader[index] - mean, 2);
     }
 
-    return sqrt(standartDeviation / Lenght);
+    return sqrt(deviation / Lenght);
 }

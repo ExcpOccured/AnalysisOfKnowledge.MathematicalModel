@@ -1,5 +1,5 @@
-#ifndef _MATH_MODEL_TYPES_
-#define _MATH_MODEL_TYPES_
+#ifndef MATH_MODEL_DATA_TYPES
+#define MATH_MODEL_DATA_TYPES
 
 #include <assert.h>
 #include <stdlib.h>
@@ -21,4 +21,4 @@ Matrix_t* AllocateMatrixMemory(int dimension);
 */
 void DisposeMatrixMemory(Matrix_t* matrix);
 
-#endif // _MATH_MODEL_TYPES_
+#endif //MATH_MODEL_DATA_TYPES
